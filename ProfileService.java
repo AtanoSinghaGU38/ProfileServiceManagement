@@ -1,27 +1,44 @@
-public class ProfileService{
+
+import java.util.List;
+
+public class ProfileService {
 
     private ProfileRepository repository;
 
-    public ProfileService(ProfileRepository repository){
-        this.repository=repository;
+    public ProfileService(ProfileRepository repository) {
+        this.repository = repository;
     }
 
-    private void addProfile(Profile profile){
-        profiles.add(profile);
+    public void addProfile(Profile profile) {
+        repository.save(profile);
     }
 
-    private void removeProfile(Profile profile){
-        profiles.remove(profile);
+    public Profile getProfile(int id) {
+        return repository.findById(id);
     }
 
-    public List<Profile> getProfiles(){
-        return profiles;
+    public List<Profile> getProfiles() {
+        return repository.findAll();
     }
 
-  public void updateProfile(Profile profile, String name, String phoneNum, String address, String email){
-        profile.setName(name);
-        profile.setPhoneNum(phoneNum);
-        profile.setAddress(address);
-        profile.setEmail(email);
+    public void removeProfile(int id) {
+        repository.delete(id);
+    }
+
+    public void updateProfile(
+            int id,
+            String name,
+            String phoneNum,
+            String address,
+            String email) {
+
+        Profile profile = repository.findById(id);
+
+        if (profile != null) {
+            profile.setName(name);
+            profile.setPhoneNum(phoneNum);
+            profile.setAddress(address);
+            profile.setEmail(email);
+        }
     }
 }
