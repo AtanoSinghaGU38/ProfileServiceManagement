@@ -10,6 +10,10 @@ public class ProfileService {
     }
 
     public void addProfile(Profile profile) {
+        if(repository.findById(profile.getId())!=null){
+            System.out.println("Profile ID already exists!");
+            return;
+        }
         repository.save(profile);
     }
 
